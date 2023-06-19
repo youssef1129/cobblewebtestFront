@@ -1,0 +1,25 @@
+.spinner {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    background-color: #4a4a4a2b;
+  }
+  
+  @keyframes anim {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .spinner > * {
+    animation: anim 1s linear infinite;
+    font-size: 50px;
+  }
+  
