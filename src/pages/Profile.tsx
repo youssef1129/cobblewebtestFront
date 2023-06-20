@@ -5,7 +5,8 @@ import { axiosUri } from '../functions/axiosUri'
 import { Iuser } from '../interfaces/Iclient'
 import { Spinner } from '../components/Spinner'
 import '../styles/profile.css'
-
+import { Button } from '@mui/material'
+import { BiLogOut } from 'react-icons/bi'
 const Profile = () => {
   const navigate = useNavigate()
   const [user, setUser] = useState<Iuser>();
@@ -44,7 +45,10 @@ const Profile = () => {
 
   return (
     <div className='profile'>
-      <button className='logout' onClick={()=>{localStorage.removeItem('token');navigate('/login')}}>logout</button>
+      {/* <button className='logout' onClick={()=>{localStorage.removeItem('token');navigate('/login')}}>logout</button> */}
+      <Button style={{ position: 'absolute' }} color='error' className='logout' variant="outlined" startIcon={<BiLogOut />}>
+        Logout
+      </Button>
       <nav>
         <img alt='logo' src={user?.client[0].avatar} />
         <label>{user?.firstname + ' ' + user?.lastname}</label>
@@ -52,7 +56,7 @@ const Profile = () => {
 
       <div>
         {
-          user?.client[0].photo.map((p)=>{
+          user?.client[0].photo.map((p) => {
             return <img alt={p.name} src={p.url} />
           })
         }

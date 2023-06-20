@@ -6,6 +6,9 @@ import { Ilogin } from '../interfaces/Ilogin'
 import { Spinner } from '../components/Spinner'
 import { axiosUri } from '../functions/axiosUri'
 import { setToken } from '../functions/localStorage'
+import TextField from '@mui/material/TextField';
+
+
 const Login = () => {
     const [userLogin, setUserLogin] = useState<Ilogin>({ email: '', password: '' })
     const [validity, setValidity] = useState<{ name: boolean } | any>([]);
@@ -47,8 +50,10 @@ const Login = () => {
             <form onSubmit={OnSubmit}>
                 <h1>Login to you account</h1>
                 {error && <label>Invalid email or password</label>}
-                <input style={{ color: `${!validity.email ? 'red' : 'black'}` }} required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$' onChange={OnChange} placeholder='email' type='email' name='email' />
-                <input style={{ color: `${!validity.password ? 'red' : 'black'}` }} required minLength={6} onChange={OnChange} placeholder='password' type='password' name='password' />
+                {/* <input style={{ color: `${!validity.email ? 'red' : 'black'}` }} required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$' onChange={OnChange} placeholder='email' type='email' name='email' /> */}
+                <TextField color='warning' error={validity.email===false} label="Email" type='email' required variant="standard" name='email' onChange={OnChange} />
+                {/* <input style={{ color: `${!validity.password ? 'red' : 'black'}` }} required minLength={6} onChange={OnChange} placeholder='password' type='password' name='password' /> */}
+                <TextField color='warning' error={!validity.password===false} label="Password" type='password' required variant='standard' name='password' onChange={OnChange} />
                 <div>
                     <button type='submit'>Login</button>
                     <Link to={'/register'}>New? <span>Register</span></Link>

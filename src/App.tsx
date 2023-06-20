@@ -7,6 +7,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='*' Component={() => <Profile />}/>
         <Route path='/profile' Component={() => <Profile />} />
         <Route path='/register' Component={() => <Register />} />
         <Route path='/login' Component={() => <Login />} />

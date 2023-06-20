@@ -1,26 +1,46 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-#root{
-    min-height: 100vh;
-    background: #4ac29a;
-    background: -webkit-linear-gradient(to right, #4ac29a, #bdfff3);
-    /* background: linear-gradient(to right, #aaeeea, #ffb833); */
-    background: linear-gradient(to right, #f2fffe, #656565);
-    overflow-x: hidden;
+#root {
+  min-height: 100vh;
+  background: #4ac29a;
+  background: -webkit-linear-gradient(to right, #4ac29a, #bdfff3);
+  /* background: linear-gradient(to right, #aaeeea, #ffb833); */
+  background: linear-gradient(to right, #210514, #062105);
+  overflow-x: hidden;
 }
 
-#root>*{
-    min-height: 100vh;
+#root > * {
+  min-height: 100vh;
 }
 
-button{
-    cursor: pointer;
+button {
+  cursor: pointer;
 }
-a{
-    cursor: pointer;
-    text-decoration: none;
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+svg {
+  cursor: pointer;
+  color: white;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 10px;
+  opacity: 1;
 }

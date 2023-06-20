@@ -5,6 +5,7 @@
   justify-content: center;
   gap: 1rem;
   padding: 10px;
+  color: white;
 }
 .profile > nav > img {
   width: 90px;
@@ -44,4 +45,10 @@
   border: solid;
   background-color: white;
   font-weight: 800;
+  transition: all 300ms linear;
 }
+
+/* .logout:hover{
+  background-color: black;
+  color: white;
+} */
