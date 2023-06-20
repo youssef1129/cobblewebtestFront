@@ -13,7 +13,7 @@
   overflow-x: hidden;
 }
 
-#root > * {
+.login,.register,.profile {
   min-height: 100vh;
 }
 
