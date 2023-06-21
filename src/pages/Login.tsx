@@ -72,7 +72,7 @@ const Login = () => {
                         color='warning' error={validity.email === false} label="Email" type='email' required variant="standard" name='email' onChange={OnChange} />
                     {/* <input style={{ color: `${!validity.password ? 'red' : 'black'}` }} required minLength={6} onChange={OnChange} placeholder='password' type='password' name='password' /> */}
                     <TextField
-                        helperText={validity.password === false && 'Please enter a valid password'}
+                        helperText={validity.password === false && 'Min: 6 chars, at least one number'}
                         color='warning' error={validity.password === false} label="Password" type='password' required variant='standard' name='password' onChange={OnChange} />
                     <div>
                         <button type='submit'>Login</button>

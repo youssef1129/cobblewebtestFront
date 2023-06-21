@@ -117,7 +117,7 @@ const Register = () => {
               minLength: 2,
               maxLength: 25,
             }}
-            helperText={validity.firstname === false && 'Please enter a valid First name'}
+            helperText={validity.firstname === false && 'Min: 2 chars, Max: 25 chars'}
             color='warning' error={validity.firstname === false} label="First Name" type='text' required variant="standard" name='firstname' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.firstname ? 'red' : 'black'}` }} required minLength={2} placeholder='first name' type='text' name='firstname' /> */}
           <TextField
@@ -125,7 +125,7 @@ const Register = () => {
               minLength: 2,
               maxLength: 25,
             }}
-            helperText={validity.lastname === false && 'Please enter a valid Last name'}
+            helperText={validity.lastname === false && 'Min: 2 chars, Max: 25 chars'}
             color='warning' error={validity.lastname === false} label="Last Name" type='text' required variant="standard" name='lastname' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.lastname ? 'red' : 'black'}` }} required minLength={2} placeholder='last name' type='text' name='lastname' /> */}
           <TextField
@@ -133,7 +133,7 @@ const Register = () => {
             color='warning' error={validity.email === false} label="Email" required variant="standard" name='email' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.email ? 'red' : 'black'}` }} required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$' placeholder='email' type='email' name='email' /> */}
           <TextField
-            helperText={validity.password === false && 'Please enter a valid password'}
+            helperText={validity.password === false && 'Min: 6 chars, at least one number'}
             color='warning' error={validity.password === false} label="Password" type='password' required variant="standard" name='password' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.password ? 'red' : 'black'}` }} required minLength={6} placeholder='password' type='password' name='password' /> */}
 
