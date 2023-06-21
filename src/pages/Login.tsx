@@ -21,6 +21,7 @@ const Login = () => {
         const { name, value } = e.target;
         setUserLogin({ ...userLogin, [name]: value })
         setValidity({ ...validity, [name]: e.target.checkValidity() });
+        name === 'password' ? validateString(name, value, true) : validateString(name, value, false)
     }
 
     const OnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,20 +51,29 @@ const Login = () => {
         return <Spinner />
     }
 
+    const validateString = (name: string, value: string, ispassword: boolean) => {
+        const regex = ispassword ? /^(?=.*\d).{6,50}$/ : /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setValidity({ ...validity, [name]: regex.test(value) });
+    }
+
     return (
         <>
-            <Snackbar onClose={handleClose} color='danger' autoHideDuration={4000}  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={error} message='Invalid email or password' >
-                <Alert style={{backgroundColor:'red',color:'white'}} severity="error">Invalid email or password!</Alert>
+            <Snackbar onClose={handleClose} color='danger' autoHideDuration={4000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={error} message='Invalid email or password' >
+                <Alert style={{ backgroundColor: 'red', color: 'white' }} severity="error">Invalid email or password!</Alert>
             </Snackbar>
             <div className='login'>
                 <img alt='image' src={Img} />
 
                 <form onSubmit={OnSubmit}>
-                    <h1>Login to you account</h1>
+                    <h1>Login to your account</h1>
                     {/* <input style={{ color: `${!validity.email ? 'red' : 'black'}` }} required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$' onChange={OnChange} placeholder='email' type='email' name='email' /> */}
-                    <TextField color='warning' error={validity.email === false} label="Email" type='email' required variant="standard" name='email' onChange={OnChange} />
+                    <TextField
+                        helperText={validity.email === false && 'Please enter a valid email'}
+                        color='warning' error={validity.email === false} label="Email" type='email' required variant="standard" name='email' onChange={OnChange} />
                     {/* <input style={{ color: `${!validity.password ? 'red' : 'black'}` }} required minLength={6} onChange={OnChange} placeholder='password' type='password' name='password' /> */}
-                    <TextField color='warning' error={validity.password === false} label="Password" type='password' required variant='standard' name='password' onChange={OnChange} />
+                    <TextField
+                        helperText={validity.password === false && 'Please enter a valid password'}
+                        color='warning' error={validity.password === false} label="Password" type='password' required variant='standard' name='password' onChange={OnChange} />
                     <div>
                         <button type='submit'>Login</button>
                         <Link to={'/register'}>New? <span>Register</span></Link>

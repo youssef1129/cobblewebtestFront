@@ -72,13 +72,22 @@
   object-fit: contain;
   border-radius: 50%;
 }
-
+.register > form > div:first-child > svg:first-child {
+position: absolute;
+    width: 30%;
+    height: 30%;
+    bottom: 0;
+    color: #4a72ff;
+    right: 0;
+    background-color: white;
+}
 #file {
   position: absolute;
   height: 100%;
   width: 100%;
   opacity: 0;
   cursor: pointer;
+  left: 0;
 }
 
 .imgCnt{

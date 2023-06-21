@@ -12,7 +12,7 @@ import { Alert, Snackbar, TextField } from '@mui/material';
 const Register = () => {
   const [userRegister, setUserRegister] = useState<Iregister>({ email: '', firstname: '', lastname: '', password: '', photos: [], role: 'client' })
   const [validity, setValidity] = useState<{ name: boolean } | any>([]);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState({ eror: false, title: '' })
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
   const [imgs, setImgs] = useState<Array<{ name: string, url: string }>>([])
@@ -22,6 +22,9 @@ const Register = () => {
     const { name, value } = e.target;
     setUserRegister({ ...userRegister, [name]: value })
     setValidity({ ...validity, [name]: e.target.checkValidity() });
+
+    name === 'password' && validateString(name, value, true)
+    name === 'email' && validateString(name, value, false)
   }
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,9 +58,19 @@ const Register = () => {
   }
   const OnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (imgs.length < 4) {
+      setError({ eror: true, title: 'please provide more than 4 images' });
+      setIsLoading(false)
+      return;
+    }
     setIsLoading(true)
     await axiosUri.post('/register', userRegister).then((res) => {
       console.log(res);
+      if (res.data.message === "account already exist") {
+        setError({ eror: true, title: 'email already exists' });
+        setIsLoading(false)
+        return;
+      }
       setToken(res.data.access_token)
       setIsLoading(false)
       navigate('/profile')
@@ -65,7 +78,7 @@ const Register = () => {
       .catch((err) => {
         console.log(err);
         setIsLoading(false)
-        setError(true)
+        setError({ eror: true, title: 'Register eror' });
       })
   }
 
@@ -73,8 +86,14 @@ const Register = () => {
     if (reason === 'clickaway') {
       return;
     }
-    setError(false);
+    setError({ eror: false, title: '' });
   };
+
+
+  const validateString = (name: string, value: string, ispassword: boolean) => {
+    const regex = ispassword ? /^(?=.*\d).{6,50}$/ : /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setValidity({ ...validity, [name]: regex.test(value) });
+  }
 
   if (isLoading) {
     return <Spinner />
@@ -83,22 +102,39 @@ const Register = () => {
 
   return (
     <>
-      <Snackbar onClose={handleClose} color='danger' autoHideDuration={4000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={error} message='Invalid email or password' >
-        <Alert style={{ backgroundColor: 'red', color: 'white' }} severity="error">Register eror!</Alert>
+      <Snackbar onClose={handleClose} color='danger' autoHideDuration={4000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={error.eror} message='Invalid email or password' >
+        <Alert style={{ backgroundColor: 'red', color: 'white' }} severity="error">{error.title}</Alert>
       </Snackbar>
       <div className='register'>
         <form onSubmit={OnSubmit}>
           <div>
+            <AiOutlineCloudUpload />
             {userRegister.avatar ? <img alt='' src={userRegister.avatar} /> : <CgProfile />}
             <input onChange={onAvatarChange} id='file' type='file' accept="image/*" />
           </div>
-          <TextField color='warning' error={validity.firstname === false} label="First Name" type='text' required variant="standard" name='firstname' onChange={OnChange} />
+          <TextField
+            inputProps={{
+              minLength: 2,
+              maxLength: 25,
+            }}
+            helperText={validity.firstname === false && 'Please enter a valid First name'}
+            color='warning' error={validity.firstname === false} label="First Name" type='text' required variant="standard" name='firstname' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.firstname ? 'red' : 'black'}` }} required minLength={2} placeholder='first name' type='text' name='firstname' /> */}
-          <TextField color='warning' error={validity.lastname === false} label="Last Name" type='text' required variant="standard" name='lastname' onChange={OnChange} />
+          <TextField
+            inputProps={{
+              minLength: 2,
+              maxLength: 25,
+            }}
+            helperText={validity.lastname === false && 'Please enter a valid Last name'}
+            color='warning' error={validity.lastname === false} label="Last Name" type='text' required variant="standard" name='lastname' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.lastname ? 'red' : 'black'}` }} required minLength={2} placeholder='last name' type='text' name='lastname' /> */}
-          <TextField color='warning' error={validity.email === false} label="Email" type='email' required variant="standard" name='email' onChange={OnChange} />
+          <TextField
+            helperText={validity.email === false && 'Please enter a valid email'}
+            color='warning' error={validity.email === false} label="Email" required variant="standard" name='email' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.email ? 'red' : 'black'}` }} required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$' placeholder='email' type='email' name='email' /> */}
-          <TextField color='warning' error={validity.password === false} label="Password" type='password' required variant="standard" name='password' onChange={OnChange} />
+          <TextField
+            helperText={validity.password === false && 'Please enter a valid password'}
+            color='warning' error={validity.password === false} label="Password" type='password' required variant="standard" name='password' onChange={OnChange} />
           {/* <input onChange={OnChange} style={{ color: `${!validity.password ? 'red' : 'black'}` }} required minLength={6} placeholder='password' type='password' name='password' /> */}
 
           <label htmlFor="files" style={{ fontSize: '30px' }}><AiOutlineCloudUpload /></label>
@@ -109,7 +145,7 @@ const Register = () => {
           <div className='imgCnt'>
             {
               imgs.length > 0 && imgs.map((i) => {
-                return <img alt={i.name} src={i.url} />
+                return <img key={i.name} alt={i.name} src={i.url} />
               })
             }
           </div>

@@ -11,9 +11,13 @@
   /* background: linear-gradient(to right, #aaeeea, #ffb833); */
   background: linear-gradient(to right, #210514, #062105);
   overflow-x: hidden;
+  font-family: "Oswald", sans-serif;
+  /* font-family: "Proza Libre", sans-serif; */
 }
 
-.login,.register,.profile {
+.login,
+.register,
+.profile {
   min-height: 100vh;
 }
 
