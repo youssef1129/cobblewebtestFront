@@ -1,3 +1,7 @@
+.profile{
+  display: flex;
+  flex-direction: column;
+}
 .profile > nav {
   display: flex;
   flex-direction: column;
@@ -21,19 +25,38 @@
 }
 
 .profile > div {
-  display: grid;
+  /* display: grid;
   grid-template-columns: auto auto auto;
   justify-items: center;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1rem; */
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  flex: 1;
+  gap: 2rem;
+  padding: 2rem;
 }
 
 .profile > div > img {
-  width: 100%;
+  /* width: 100%;
   height: 100%;
   object-fit: contain;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 5px; */
+
+}
+
+#imgCnt {
+  position: relative;
+  flex: 1;
+}
+#imgCnt > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .logout {

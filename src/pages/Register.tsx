@@ -141,7 +141,7 @@ const Register = () => {
           {
             userRegister.photos.length > 0 && <label>{userRegister.photos.length + ' photos uploaded'}</label>
           }
-          <input required id='files' style={{ display: 'none' }} accept="image/*" multiple type='file' onChange={onFileChange} />
+          <input id='files' style={{ display: 'none' }} accept="image/*" multiple type='file' onChange={onFileChange} />
           <div className='imgCnt'>
             {
               imgs.length > 0 && imgs.map((i) => {

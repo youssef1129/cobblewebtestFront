@@ -5,13 +5,22 @@ import { axiosUri } from '../functions/axiosUri'
 import { Iuser } from '../interfaces/Iclient'
 import { Spinner } from '../components/Spinner'
 import '../styles/profile.css'
-import { Button, Skeleton } from '@mui/material'
+import { Button, IconButton, Skeleton } from '@mui/material'
 import { BiLogOut } from 'react-icons/bi'
+import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md'
+
 const Profile = () => {
   const navigate = useNavigate()
   const [user, setUser] = useState<Iuser>();
   const [isLoading, setIsLoading] = useState(false)
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? user?.client[0].photo.length! - 1 : prevIndex - 1));
+  };
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === user?.client[0].photo.length! - 1 ? 0 : prevIndex + 1));
+  };
 
   useEffect(() => {
     setIsLoading(true)
@@ -46,7 +55,7 @@ const Profile = () => {
   return (
     <div className='profile'>
       {/* <button className='logout' onClick={()=>{localStorage.removeItem('token');navigate('/login')}}>logout</button> */}
-      <Button style={{ position: 'absolute' }} onClick={()=>{localStorage.removeItem('token');navigate('/login')}} color='error' className='logout' variant="outlined" startIcon={<BiLogOut />}>
+      <Button style={{ position: 'absolute' }} onClick={() => { localStorage.removeItem('token'); navigate('/login') }} color='error' className='logout' variant="outlined" startIcon={<BiLogOut />}>
         Logout
       </Button>
       <nav>
@@ -55,11 +64,25 @@ const Profile = () => {
       </nav>
 
       <div>
-        {
-          user?.client[0].photo.map((p) => {
-            return <img alt={p.name} src={p.url} />
-          })
-        }
+        <Button style={{placeSelf:'center'}} color='warning' disabled={currentIndex === 0} onClick={handlePrev} variant="contained" startIcon={<MdNavigateBefore />}>Prev</Button>
+        <div id="imgCnt">
+          {user?.client[0].photo.map((p, index) => (
+            <img
+              key={index}
+              alt={p.name}
+              src={p.url}
+              style={{
+                opacity: index === currentIndex ? 1 : 0,
+                transform: index > currentIndex ? 'translateX(200%)' : (index < currentIndex ? 'translateX(-200%)' : 'translateX(0)'),
+                transition: 'all 0.5s',
+                filter: index === currentIndex ? 'blur(0)' : 'blur(4px)',
+              }}
+            />
+          ))}
+        </div>
+        <Button style={{placeSelf:'center'}} color='warning' disabled={currentIndex === user?.client[0].photo.length! - 1} onClick={handleNext} variant="contained" startIcon={<MdNavigateNext />}>Next</Button>
+
+      
       </div>
 
     </div>
